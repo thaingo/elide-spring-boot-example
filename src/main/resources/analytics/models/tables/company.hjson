@@ -1,0 +1,19 @@
+{
+    tables: [
+    {
+        name: report
+        table: company
+        dimensions: [
+            {
+                name: companyId
+                type: TEXT
+                definition: '{{$id}}'
+            }
+            {
+                name: type
+                type: TEXT
+                definition: '{{$type}}'
+            }
+        ]
+    }]
+}
