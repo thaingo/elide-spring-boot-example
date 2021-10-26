@@ -71,6 +71,13 @@
        FOREIGN KEY (group_id) REFERENCES ArtifactGroup(name),
        FOREIGN KEY (product_id) REFERENCES ArtifactProduct(name)
     );
+
+    CREATE TABLE company (
+    id varchar(255) NOT NULL,
+    type integer,
+    desc varchar(255) DEFAULT NULL,
+    PRIMARY KEY (id)
+    );
         </sql>
     </changeSet>
     <changeSet author="admin" id="1539122270">
