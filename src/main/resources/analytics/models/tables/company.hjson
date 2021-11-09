@@ -11,7 +11,7 @@
             }
             {
                 name: type
-                type: TEXT
+                type: example.models.CompanyType
                 definition: '{{$type}}'
             }
         ]
