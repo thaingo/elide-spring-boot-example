@@ -2,6 +2,8 @@ package example.models;
 
 import com.yahoo.elide.annotation.Include;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -15,5 +17,7 @@ public class Company {
     private CompanyType type = CompanyType.PRIVATE;
 
     private String desc = "";
+
+    private Date date = new Date();
 
 }

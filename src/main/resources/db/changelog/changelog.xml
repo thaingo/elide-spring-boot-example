@@ -76,6 +76,7 @@
     id varchar(255) NOT NULL,
     type integer,
     desc varchar(255) DEFAULT NULL,
+    date timestamp NOT NULL,
     PRIMARY KEY (id)
     );
         </sql>
