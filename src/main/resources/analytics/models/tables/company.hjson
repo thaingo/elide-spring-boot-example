@@ -11,7 +11,8 @@
             }
             {
                 name: type
-                type: example.models.CompanyType
+                type: ENUM_ORDINAL
+                values: ['PRIVATE', 'PUBLIC']
                 definition: '{{$type}}'
             }
         ]
