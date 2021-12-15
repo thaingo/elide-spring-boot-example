@@ -14,7 +14,7 @@ public class Company {
     @Id
     private String id;
 
-    private CompanyType type = CompanyType.PRIVATE;
+    private CompanyType type;
 
     private String desc = "";
 
