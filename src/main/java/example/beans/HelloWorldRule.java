@@ -1,7 +1,11 @@
 package example.beans;
 
+import example.models.Company;
+import example.models.CompanyType;
+
 import org.jeasy.rules.annotation.Action;
 import org.jeasy.rules.annotation.Condition;
+import org.jeasy.rules.annotation.Fact;
 import org.jeasy.rules.annotation.Rule;
 import org.springframework.stereotype.Component;
 
@@ -10,13 +14,13 @@ import org.springframework.stereotype.Component;
 public class HelloWorldRule {
 
     @Condition
-    public boolean when() {
-        return true;
+    public boolean when(@Fact(value = "company") Company company) {
+        return company.getType().equals(CompanyType.PRIVATE);
     }
 
     @Action
     public void then() {
-        System.out.println("hello world");
+        System.out.println("hello private company");
     }
 
 }

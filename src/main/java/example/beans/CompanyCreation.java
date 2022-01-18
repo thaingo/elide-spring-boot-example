@@ -19,6 +19,7 @@ public class CompanyCreation implements LifeCycleHook<Company> {
 
     @Autowired
     private RulesEngine rulesEngine;
+
     @Autowired
     private HelloWorldRule helloWorldRule;
 
@@ -28,6 +29,8 @@ public class CompanyCreation implements LifeCycleHook<Company> {
                         RequestScope requestScope, Optional<ChangeSpec> changeSpec) {
         if (company.getType().equals(CompanyType.PRIVATE)) {
             final Facts facts = new Facts();
+            facts.put("company", company);
+
             Rules rules = new Rules();
             rules.register(helloWorldRule);
             rulesEngine.fire(rules, facts);
