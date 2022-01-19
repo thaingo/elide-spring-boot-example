@@ -75,7 +75,15 @@
     CREATE TABLE company (
     id varchar(255) NOT NULL,
     type integer,
+    condition varchar(255) DEFAULT NULL,
     desc varchar(255) DEFAULT NULL,
+    PRIMARY KEY (id)
+    );
+
+    CREATE TABLE AssignmentRule (
+    id varchar(255) NOT NULL,
+    expr varchar(255) DEFAULT NULL,
+    action varchar(255) DEFAULT NULL,
     PRIMARY KEY (id)
     );
         </sql>

@@ -4,36 +4,52 @@ import com.yahoo.elide.annotation.LifeCycleHookBinding;
 import com.yahoo.elide.core.lifecycle.LifeCycleHook;
 import com.yahoo.elide.core.security.ChangeSpec;
 import com.yahoo.elide.core.security.RequestScope;
+import com.yahoo.elide.datastores.jpa.transaction.AbstractJpaTransaction;
 
+import example.models.AssignmentRule;
 import example.models.Company;
-import example.models.CompanyType;
 
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rules;
 import org.jeasy.rules.api.RulesEngine;
+import org.jeasy.rules.mvel.MVELRule;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+@Slf4j
 public class CompanyCreation implements LifeCycleHook<Company> {
 
     @Autowired
     private RulesEngine rulesEngine;
 
-    @Autowired
-    private HelloWorldRule helloWorldRule;
-
     @Override
     public void execute(LifeCycleHookBinding.Operation operation,
                         LifeCycleHookBinding.TransactionPhase transactionPhase, Company company,
-                        RequestScope requestScope, Optional<ChangeSpec> changeSpec) {
-        if (company.getType().equals(CompanyType.PRIVATE)) {
-            final Facts facts = new Facts();
-            facts.put("company", company);
+                        RequestScope scope, Optional<ChangeSpec> changeSpec) {
 
-            Rules rules = new Rules();
-            rules.register(helloWorldRule);
-            rulesEngine.fire(rules, facts);
-        }
+        final EntityManager em = scope.getTransaction().getProperty(AbstractJpaTransaction.ENTITY_MANAGER_PROPERTY);
+        final Query ruleQuery = em.createQuery("select ar from AssignmentRule ar");
+        final AssignmentRule rule = (AssignmentRule) ruleQuery.getSingleResult();
+        log.info("Assignment rule {}", rule.toString());
+
+        // define rule
+        final MVELRule jxelRule = new MVELRule()
+                .name("")
+                .description("Example rule using JXEL")
+                .when(rule.getExpr())
+                .then("System.out.println(\"Some actions here!\");");
+
+        final Facts facts = new Facts();
+        facts.put("company", company);
+
+        Rules rules = new Rules();
+        rules.register(jxelRule);
+        rulesEngine.fire(rules, facts);
     }
 }
