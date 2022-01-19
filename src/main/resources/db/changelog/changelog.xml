@@ -74,9 +74,8 @@
 
     CREATE TABLE company (
     id varchar(255) NOT NULL,
-    type integer,
-    condition varchar(255) DEFAULT NULL,
-    desc varchar(255) DEFAULT NULL,
+    crAt timestamp NOT NULL,
+    type varchar(255) DEFAULT NULL,
     PRIMARY KEY (id)
     );
 
