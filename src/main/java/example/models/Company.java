@@ -14,7 +14,11 @@ import javax.persistence.Id;
 
 @Entity
 @Include
-@LifeCycleHookBinding(hook = CompanyCreation.class, operation = LifeCycleHookBinding.Operation.CREATE)
+@LifeCycleHookBinding(
+        hook = CompanyCreation.class,
+        operation = LifeCycleHookBinding.Operation.CREATE,
+        phase = LifeCycleHookBinding.TransactionPhase.PREFLUSH
+)
 @Data
 public class Company {
 
@@ -23,5 +27,6 @@ public class Company {
 
     private String type;
     private Date crAt;
+    private String crBy;
 
 }

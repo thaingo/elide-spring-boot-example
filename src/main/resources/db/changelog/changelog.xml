@@ -76,6 +76,7 @@
     id varchar(255) NOT NULL,
     crAt timestamp NOT NULL,
     type varchar(255) DEFAULT NULL,
+    crBy varchar(255) DEFAULT NULL,
     PRIMARY KEY (id)
     );
 

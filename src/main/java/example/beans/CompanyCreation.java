@@ -36,11 +36,10 @@ public class CompanyCreation implements LifeCycleHook<Company> {
         final EntityManager em = scope.getTransaction().getProperty(AbstractJpaTransaction.ENTITY_MANAGER_PROPERTY);
         final Query ruleQuery = em.createQuery("select ar from AssignmentRule ar");
         final AssignmentRule rule = (AssignmentRule) ruleQuery.getSingleResult();
-
         // define rule
         final MVELRule jxelRule = new MVELRule()
                 .when(rule.getExpr())
-                .then("System.out.println(\"Some actions here!\");");
+                .then(rule.getAction());
 
         final Facts facts = new Facts();
         facts.put("company", company);

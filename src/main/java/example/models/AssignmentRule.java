@@ -17,5 +17,6 @@ public class AssignmentRule {
 
     // using JEXL e.g. condition == PRIVATE
     private String expr;
+
     private String action;
 }
