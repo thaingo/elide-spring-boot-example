@@ -1,0 +1,9 @@
+name: male rule
+condition: "person.gender == Gender.MALE"
+actions:
+  - "System.out.println(person.name + \" is male\");"
+---
+name: female rule
+condition: "person.gender == Gender.FEMALE"
+actions:
+  - "System.out.println(person.name + \" is female\");"
