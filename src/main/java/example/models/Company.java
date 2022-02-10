@@ -28,5 +28,6 @@ public class Company {
     private CompanyType type;
     private Date crAt;
     private String crBy;
+    private Integer ownerId;
 
 }
