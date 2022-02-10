@@ -8,11 +8,13 @@ import com.yahoo.elide.datastores.jpa.transaction.AbstractJpaTransaction;
 
 import example.models.AssignmentRule;
 import example.models.Company;
+import example.models.CompanyType;
 
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rules;
 import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.mvel.MVELRule;
+import org.mvel2.ParserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +39,10 @@ public class CompanyCreation implements LifeCycleHook<Company> {
         final Query ruleQuery = em.createQuery("select ar from AssignmentRule ar");
         final AssignmentRule rule = (AssignmentRule) ruleQuery.getSingleResult();
         // define rule
-        final MVELRule jxelRule = new MVELRule()
+        final ParserContext parserContext = new ParserContext();
+        parserContext.addImport(CompanyType.class);
+
+        final MVELRule jxelRule = new MVELRule(parserContext)
                 .when(rule.getExpr())
                 .then(rule.getAction());
 

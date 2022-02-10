@@ -25,7 +25,7 @@ public class Company {
     @Id
     private String id;
 
-    private String type;
+    private CompanyType type;
     private Date crAt;
     private String crBy;
 

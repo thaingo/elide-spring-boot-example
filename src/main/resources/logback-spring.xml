@@ -40,6 +40,7 @@
 
     <!-- Log Analytic SQL Queries -->
     <logger name="com.yahoo.elide.datastores.aggregation.core.Slf4jQueryLogger" level="DEBUG" />
+    <logger name="org.jeasy.rules" level="DEBUG" />
 
     <root level="info">
         <appender-ref ref="STDOUT" />
