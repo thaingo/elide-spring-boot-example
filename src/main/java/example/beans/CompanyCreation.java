@@ -8,7 +8,6 @@ import com.yahoo.elide.datastores.jpa.transaction.AbstractJpaTransaction;
 
 import example.models.AssignmentRule;
 import example.models.Company;
-import example.models.CompanyType;
 
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rules;
@@ -30,6 +29,12 @@ public class CompanyCreation implements LifeCycleHook<Company> {
     @Autowired
     private RulesEngine rulesEngine;
 
+    @Autowired
+    private Rules rules;
+
+    @Autowired
+    private ParserContext parserContext;
+
     @Override
     public void execute(LifeCycleHookBinding.Operation operation,
                         LifeCycleHookBinding.TransactionPhase transactionPhase, Company company,
@@ -38,9 +43,6 @@ public class CompanyCreation implements LifeCycleHook<Company> {
         final EntityManager em = scope.getTransaction().getProperty(AbstractJpaTransaction.ENTITY_MANAGER_PROPERTY);
         final Query ruleQuery = em.createQuery("select ar from AssignmentRule ar");
         final AssignmentRule rule = (AssignmentRule) ruleQuery.getSingleResult();
-        // define rule
-        final ParserContext parserContext = new ParserContext();
-        parserContext.addImport(CompanyType.class);
 
         final MVELRule jxelRule = new MVELRule(parserContext)
                 .when(rule.getExpr())
@@ -49,7 +51,6 @@ public class CompanyCreation implements LifeCycleHook<Company> {
         final Facts facts = new Facts();
         facts.put("company", company);
 
-        Rules rules = new Rules();
         rules.register(jxelRule);
         rulesEngine.fire(rules, facts);
     }
